@@ -21,12 +21,24 @@ Class Publications extends Controller{
         // $this->view('pages/publication' , $publications);
 
     }
-    public function add(){
+    public function addPub(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $postData = file_get_contents("php://input");
             $data = json_decode($postData, true);
-            if(!empty($data['msg'])){
-                echo $data['msg'];
+            $title =$data['title'] ;
+            $price =$data['price'] ;
+            $createdBy =$data['created_by'] ;
+
+            if(!empty( $title && $price && $createdBy )){
+
+            $add=$this->publicationModel->addPub($title, $price, $createdBy);
+            if($add){
+                echo json_encode(array('message'=>true));
+            }else{
+                echo json_encode(array('message'=>false));
+
+            }
+
             }else{
                 echo json_encode(['message'=>'invalid request']);
             }
@@ -35,4 +47,5 @@ Class Publications extends Controller{
             echo json_encode(['message'=>'invalid request']);
         }
     }
+
 }
