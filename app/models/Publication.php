@@ -13,4 +13,13 @@
         return $this->db->resultset();
     }
 
+    public function addPub($title, $price, $createdBy)
+    {
+        $this->db->query("INSERT INTO publication (title, price, created_by) VALUES('$title', '$price', '$createdBy')");
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+          }
+    }
   }
